@@ -1,0 +1,27 @@
+.title{
+    text-align: center;
+}
+.button-home{
+    font-size: 18px;
+    padding: 10px 20px;
+    display: block;
+    color: inherit;
+    background-color: #4682b4;
+    color:white;
+}
+.button-home:hover{
+    color:white;
+}
+
+.word_wrap{
+     overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  /* Adds a hyphen where the word breaks */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+  max-width:150px;
+    
+}
