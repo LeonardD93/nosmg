@@ -1,8 +1,7 @@
+{{--player--}}
 @extends('layouts.app')
 @section('content')
-
-
-<div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 @if (session('error'))
@@ -29,7 +28,7 @@
                                 <div class="form-group">
                                     <label for="name" class="col-md-4 control-label">{{__('Name')}}</label>
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="name" >
+                                        <input id="name" type="text" class="form-control" name="name" required>
                                     </div>
                                 </div>
                              @php /*dump($games->count());*/ @endphp
@@ -51,7 +50,13 @@
                             <div class="form-group">
                                 <label for="level" class="col-md-4 control-label">{{__('Level')}}</label>
                                 <div class="col-md-6">
-                                    <input id="level" type="text" class="form-control" name="name" >
+                                    <input id="level" type="number" class="form-control" name="level" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="class" class="col-md-4 control-label">{{__('Class')}}</label>
+                                <div class="col-md-6">
+                                    <input id="class" type="class" class="form-control" name="class" required>
                                 </div>
                             </div>
                             {{--extra params--}}
@@ -60,7 +65,7 @@
                                     <label for="extra_{{$extra_param->id}}" class="col-md-4 control-label">{{__($extra_param->name)}}</label>
                                     <div class="col-md-6">
                                         @if($extra_param->type!='textarea')
-                                        <input id="extra_{{$extra_param->id}}" type="{{$extra_param->type}}" class="form-control" name="extra_{{$extra_param->id}}" @if($extra_param->required) required @endif>
+                                        <input id="extra_{{$extra_param->id}}" type="{{$extra_param->type}}" class="form-control" name="extra_params[{{$extra_param->id}}]" @if($extra_param->required) required @endif>
                                         @else
                                             <textarea id="extra_{{$extra_param->id}}" class="form-control" name="{{$extra_param->id}}" @if($extra_param->required) required @endif ></textarea>
                                         @endif

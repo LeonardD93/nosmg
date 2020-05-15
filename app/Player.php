@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Player extends Model
 {
     protected $fillable = [
-        'id','level', 'class','created_at','updated_at'
+        'id','level', 'name', 'class','created_at','updated_at'
     ];
     
     public function user(){
@@ -36,5 +36,8 @@ class Player extends Model
     
     public function activites(){ // attivita a cui partecipo molti a molti
         return $this->belongsToMany('App\Activity', 'activity_player','player_id', 'activity_id');    
+    }
+     public function params(){
+        return $this->belongsToMany('App\Param')->withPivot('value');//set a value in table param_player   
     }
 }
