@@ -45,7 +45,7 @@ class PlayerController extends Controller
         $player->user_id=$user->id;
 
         $player->save();
-        dump($request->all());
+        //dump($request->all());
         foreach($request->extra_params as $key=>$value){
             $param_player=new Param_player();
             $param_player->player_id=$player->id;
@@ -53,7 +53,7 @@ class PlayerController extends Controller
             $param_player->value=isset($value) ?$value:'';
             $param_player->save();
         }
-        //return redirect() ->route('players.edit', $player);
+        return redirect() ->route('players.edit', $player);
     }
 
     public function show(Player $player)
