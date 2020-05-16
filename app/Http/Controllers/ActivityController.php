@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use App\User;
+use App\Activity_type;
+use \App\Activity_player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,14 +74,48 @@ class ActivityController extends Controller
 
     public function create()
     {//show the form to store info
-        
-        return view('activity.create');
+        $user = Auth::user();
+        if($user){
+            $players=$user->players()->get();
+            $activity_types= Activity_type::get(); // controlli in base al game
+            
+            return view('activity.create', ['players'=>$players, 'activity_types'=>$activity_types]);
+        }
         
     }
 
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        
+        if($user){
+            $players=$user->players()->get();
+            $user_player=false;
+            foreach($players as $player){
+                if($player->id==$request->organizer_id)
+                    $user_player=true;                    
+            }
+            if($user_player){            
+                $activity=new Activity();
+                $activity->name=$request->name;
+                $activity->organizer_id=$request->organizer_id;
+                $activity->start_date=$request->start_date;
+                $activity->start_time=$request->start_time;
+                $activity->level_req=$request->level_req;
+                $activity->type_id=$request->type_id;
+                $activity->users_number=$request->users_number;
+                $activity->other_req=$request->other_req;
+                $activity->save();
+
+                $activity_player=new Activity_player();
+                $activity_player->player_id=$request->organizer_id;
+                $activity_player->activity_id=$activity->id;
+                $activity_player->save();
+                return redirect() ->route('activities.edit', $activity);
+            }
+           else return redirect() ->route('activities.index')->with('error', 'No permissions');   
+        }
+        else return redirect() ->route('activities.index')->with('error', 'No permissions');   
     }
 
     public function show(Activity $activity)
@@ -89,29 +125,75 @@ class ActivityController extends Controller
 
     public function edit(Activity $activity)
     {
-        //
+        $user = Auth::user();
+        $is_organizer=$this::user_organizer($user, $activity);
+        if($user && $is_organizer){
+            $players=$user->players()->get();
+            $activity_types= Activity_type::get();       
+         return view('activity.edit', ['activity'=>$activity, 'players'=>$players, 'activity_types'=>$activity_types]);
+        }
+         else return redirect() ->route('activities.index')->with('error', 'No permissions');   
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Activity $activity)
     {
-        //
+        $user = Auth::user();
+        $is_organizer=$this::user_organizer($user, $activity);
+        if($user && $is_organizer){
+            $to_update=0;
+            if($activity->name!=$request->name ){
+                $activity->name=$request->name; 
+                $to_update=1;
+            }
+            if($activity->start_date!=$request->start_date ){
+                $activity->start_date=$request->start_date; 
+                $to_update=1;
+            }
+            if($activity->start_time!=$request->start_time ){
+                $activity->start_time=$request->start_time; 
+                $to_update=1;
+            }
+            if($activity->level_req!=$request->level_req ){
+                $activity->level_req=$request->level_req; 
+                $to_update=1;
+            }
+            if($activity->type_id!=$request->type_id ){
+                $activity->type_id=$request->type_id; 
+                $to_update=1;
+            }
+            if($activity->users_number!=$request->users_number ){
+                $activity->users_number=$request->users_number; 
+                $to_update=1;
+            }
+            if($activity->other_req!=$request->other_req ){
+                $activity->other_req=$request->other_req; 
+                $to_update=1;
+            }   
+            if($to_update){
+                $activity->save();
+                return redirect() ->route('activities.index')->with('success', 'Updated successful');
+            }
+            else{
+                return redirect() ->route('activities.index')->with('warning', 'No changes detected');
+            }    
+        }
+        else 
+            return redirect() ->route('activities.index')->with('error', 'No permissions');          
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Activity $activity)
     {
-        //
+        $user=$user = Auth::user();
+        $is_organizer=$this::user_organizer($user, $activity);
+        if($user && $is_organizer){
+            $activity_players=$activity->activity_player()->get();
+            foreach($activity_players as $activity_player ){
+                $activity_player->delete();       
+            }
+            $activity->delete();
+         return redirect() ->route('activities.index')->with('success', 'Deleted successful'); 
+        }
+        else
+            return redirect() ->route('activities.index')->with('error', 'No permissions');
     }
 }

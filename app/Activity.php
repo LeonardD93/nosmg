@@ -28,5 +28,10 @@ class Activity extends Model
     
     public function request_activity(){
         return $this->hasMany('App\Request_activity', 'activity_id');
-    }     
+    } 
+    
+    public function activity_player(){
+        return $this->hasMany('App\Activity_player', 'activity_id');
+    }
+    
 }

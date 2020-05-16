@@ -1,3 +1,6 @@
+.table td {
+    padding: 0.50rem;
+}
 .title{
     text-align: center;
 }
@@ -27,4 +30,8 @@
 }
 .delete_form{
     display:inline;
+}
+
+table .btn.btn-sm{
+     margin: 5px;
 }
