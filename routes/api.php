@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::delete('elimina/{game_id}', function(int $id) {
+  $game = \App\Game::findOrFail($id);
+  $game->delete();
+  return $game->id;
+});
+
+Route::group(['middleware'=>'auth:api'], function() {
+  Route::get('esempio', function() {
+    return \App\Game::all();
+  });
+  Route::get('users/me', function() {
+    return Auth::user();
+  });
 });

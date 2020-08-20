@@ -15,19 +15,28 @@ class ActivityController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function user_organizer( $user ,$activity){
-        $players=$user->players()->get();
-        $organizer=false;
-        foreach($players as $player){
-            if($player->id==$activity->organizer_id)
-                $organizer=true;
-           /* $activities=$player->activities()->get();
-            foreach($activities as $activity){     
-            }
-            */  
-        }
-        return $organizer;
+
+    public static function user_organizer( $user ,$activity){
+        return $user->players()->where('id', $activity->organizer_id)->exists();
+
+        // return $user->players()->pluck('id')->contains($activity->organizer_id);
+
+        // return $user->players()
+        // ->whereHas('activity_organizing', function($q) use($activity) {
+        //     $q->where('id', $activity->id);
+        // })->exists();
+
+        // $players=$user->players()->with('activities')->get();
+        // $organizer=false;
+        // foreach($players as $player){
+        //     if($player->id==$activity->organizer_id)
+        //         $organizer=true;
+        //    /* $activities=$player->activities()->get();
+        //     foreach($activities as $activity){
+        //     }
+        //     */
+        // }
+        // return $organizer;
     }
     /*
     public function my_activities(){
@@ -45,8 +54,8 @@ class ActivityController extends Controller
         return $activities;//$players; //
     }
     */
-    
-    
+
+
     public function getAllActivity(){
         $user = Auth::user();
         $activities=Activity::get();
@@ -57,14 +66,14 @@ class ActivityController extends Controller
             $type_name=$type->name;
             $macrocategory=$type->macrocategory;
             $activity['organizer_name']=$organizer;
-            $activity['user_organizer']=$this::user_organizer( $user ,$activity);
+            $activity['user_organizer']=self::user_organizer( $user ,$activity);
             $activity['type_name']=$type_name;
             $activity['macrocategory']=$macrocategory;
             $activities_out[]=$activity;
         }
         return $activities_out;
     }
-    
+
     public function index()
     {
         //$user = Auth::user();
@@ -78,24 +87,24 @@ class ActivityController extends Controller
         if($user){
             $players=$user->players()->get();
             $activity_types= Activity_type::get(); // controlli in base al game
-            
+
             return view('activity.create', ['players'=>$players, 'activity_types'=>$activity_types]);
         }
-        
+
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
-        
+
         if($user){
             $players=$user->players()->get();
             $user_player=false;
             foreach($players as $player){
                 if($player->id==$request->organizer_id)
-                    $user_player=true;                    
+                    $user_player=true;
             }
-            if($user_player){            
+            if($user_player){
                 $activity=new Activity();
                 $activity->name=$request->name;
                 $activity->organizer_id=$request->organizer_id;
@@ -113,9 +122,9 @@ class ActivityController extends Controller
                 $activity_player->save();
                 return redirect() ->route('activities.edit', $activity);
             }
-           else return redirect() ->route('activities.index')->with('error', 'No permissions');   
+           else return redirect() ->route('activities.index')->with('error', 'No permissions');
         }
-        else return redirect() ->route('activities.index')->with('error', 'No permissions');   
+        else return redirect() ->route('activities.index')->with('error', 'No permissions');
     }
 
     public function show(Activity $activity)
@@ -126,72 +135,72 @@ class ActivityController extends Controller
     public function edit(Activity $activity)
     {
         $user = Auth::user();
-        $is_organizer=$this::user_organizer($user, $activity);
+        $is_organizer=self::user_organizer($user, $activity);
         if($user && $is_organizer){
             $players=$user->players()->get();
-            $activity_types= Activity_type::get();       
+            $activity_types= Activity_type::get();
          return view('activity.edit', ['activity'=>$activity, 'players'=>$players, 'activity_types'=>$activity_types]);
         }
-         else return redirect() ->route('activities.index')->with('error', 'No permissions');   
+         else return redirect() ->route('activities.index')->with('error', 'No permissions');
     }
 
     public function update(Request $request, Activity $activity)
     {
         $user = Auth::user();
-        $is_organizer=$this::user_organizer($user, $activity);
+        $is_organizer=self::user_organizer($user, $activity);
         if($user && $is_organizer){
             $to_update=0;
             if($activity->name!=$request->name ){
-                $activity->name=$request->name; 
+                $activity->name=$request->name;
                 $to_update=1;
             }
             if($activity->start_date!=$request->start_date ){
-                $activity->start_date=$request->start_date; 
+                $activity->start_date=$request->start_date;
                 $to_update=1;
             }
             if($activity->start_time!=$request->start_time ){
-                $activity->start_time=$request->start_time; 
+                $activity->start_time=$request->start_time;
                 $to_update=1;
             }
             if($activity->level_req!=$request->level_req ){
-                $activity->level_req=$request->level_req; 
+                $activity->level_req=$request->level_req;
                 $to_update=1;
             }
             if($activity->type_id!=$request->type_id ){
-                $activity->type_id=$request->type_id; 
+                $activity->type_id=$request->type_id;
                 $to_update=1;
             }
             if($activity->users_number!=$request->users_number ){
-                $activity->users_number=$request->users_number; 
+                $activity->users_number=$request->users_number;
                 $to_update=1;
             }
             if($activity->other_req!=$request->other_req ){
-                $activity->other_req=$request->other_req; 
+                $activity->other_req=$request->other_req;
                 $to_update=1;
-            }   
+            }
             if($to_update){
                 $activity->save();
                 return redirect() ->route('activities.index')->with('success', 'Updated successful');
             }
             else{
                 return redirect() ->route('activities.index')->with('warning', 'No changes detected');
-            }    
+            }
         }
-        else 
-            return redirect() ->route('activities.index')->with('error', 'No permissions');          
+        else
+            return redirect() ->route('activities.index')->with('error', 'No permissions');
     }
 
     public function destroy(Activity $activity)
     {
         $user=$user = Auth::user();
-        $is_organizer=$this::user_organizer($user, $activity);
+        $is_organizer=self::user_organizer($user, $activity);
         if($user && $is_organizer){
             $activity_players=$activity->activity_player()->get();
             foreach($activity_players as $activity_player ){
-                $activity_player->delete();       
+                $activity_player->delete();
             }
             $activity->delete();
-         return redirect() ->route('activities.index')->with('success', 'Deleted successful'); 
+         return redirect() ->route('activities.index')->with('success', 'Deleted successful');
         }
         else
             return redirect() ->route('activities.index')->with('error', 'No permissions');

@@ -20,18 +20,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+/*
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
-    
-    public function isAdmin()    {        
-        return $this->type === self::ADMIN_TYPE;    
+    ];*/
+
+    public function isAdmin()    {
+        return $this->type === self::ADMIN_TYPE;
     }
-    
-    public function players(){
-        return $this->hasMany('App\Player','user_id');
-    }
-    
-    
-    
+
 }

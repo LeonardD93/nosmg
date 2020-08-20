@@ -27,7 +27,7 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    
+
     protected $redirectTo = RouteServiceProvider::HOME;
 
     public function __construct()
@@ -46,7 +46,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
         ]);
     }
 
@@ -58,20 +58,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $now=Carbon::now()->toDateTimeString();     
+        $now=Carbon::now()->toDateTimeString();
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'type' => User::DEFAULT_TYPE,
         ]);
-        
+
     }
-    
+
     public function requestInvitation() {// request an invitation
         return view('auth.request');
     }
-    
+
     public function showRegistrationForm(Request $request){// need also gdpr
         $invitation_token = $request->get('invitation_token');
         $invitation = Invitation::where('invitation_token', $invitation_token)->firstOrFail();
@@ -79,37 +79,37 @@ class RegisterController extends Controller
 
         return view('auth.register', compact('email'));
     }
-    
+
     protected function store(Request $request){
-         $now=Carbon::now()->toDateTimeString();     
-        
+         $now=Carbon::now()->toDateTimeString();
+
         $usr=User::where('email',$request->email)->first();
         if($usr)
-           return redirect()->route('login')->with('error', 'You are already registered with this email'); 
-            
-        
+           return redirect()->route('login')->with('error', 'You are already registered with this email');
+
+
         $validate=$this->validate(request(), [
            'name' => ['required', 'string', 'max:255'],
            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-           'password' => ['required', 'string', 'min:8', 'confirmed'],
+           'password' => ['required', 'string', 'min:4', 'confirmed'],
         ]);
-       
+
         $invitation=Invitation::where('email',$request->email)->first();
         if($invitation && $validate){
             $user=new User();
             $user->name = request('name');
             $user->email = request('email');
             $user->password = bcrypt(request('password'));
-           
+
             $user->save();
             $invitation->registered_at=$now;
             $invitation->save();
-            
-           return redirect()->route('login')->with('success', 'Registered successful'); 
+
+           return redirect()->route('login')->with('success', 'Registered successful');
         }
         else {
-            redirect()->route('login')->with('error', 'Something went wrong or invalid invitation'); 
-        } 
+            redirect()->route('login')->with('error', 'Something went wrong or invalid invitation');
+        }
     }
-    
+
 }

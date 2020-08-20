@@ -1,0 +1,8 @@
+$font-family-monospace: 'fira code';
+$font-family-base: $font-family-monospace;
+
+$body-bg: #ECEFF4;
+$body-color: #3B4252;
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';

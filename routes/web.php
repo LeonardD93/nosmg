@@ -19,7 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::post('invitations', 'InvitationsController@store')->name('invitations.store'); // store invitation 
+Route::post('invitations', 'InvitationsController@store')->name('invitations.store'); // store invitation
 
 Route::get('register/request', 'Auth\RegisterController@requestInvitation')->middleware('guest')->name('requestInvitation'); //request invitation not autentichated
 Route::get( 'invitations/create','InvitationsController@create')->middleware('auth')->name('invitations.create'); // invite a new user
@@ -42,8 +42,9 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 
 Route::resource('activities', 'ActivityController');
 Route::resource('players', 'PlayerController');
+
 /*
- * 
+ *
 Verb        URI                         Action      RouteName
 GET         /activities                 index       activities.index
 GET         /activities/create          create      activities.create
