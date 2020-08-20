@@ -13,7 +13,7 @@ class CreateParamPlayer extends Migration
      */
     public function up()
     {
-        Schema::create('param_players', function (Blueprint $table) {
+        Schema::create('param_player', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('player_id')->unsigned();
             $table->bigInteger('param_id')->unsigned();

@@ -18,11 +18,11 @@ class CreateInvitations extends Migration
             $table->string('invitation_token');
             $table->string('email');
             $table->string('message')->nullable();
-            $table->bigInteger('referer_id')->unsigned();
-            //$table->datetime('email_verified_at')->nullable();
+            $table->bigInteger('referer_id')->unsigned()->nullable();
+            $table->datetime('registered_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('referer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('referer_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

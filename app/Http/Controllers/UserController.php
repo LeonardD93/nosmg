@@ -14,7 +14,7 @@ class UserController extends Controller
     }
 
     public function edit(User $user)
-    {   
+    {
         $user = Auth::user();
         return view('user.edit', compact('user'));
     }
@@ -22,7 +22,7 @@ class UserController extends Controller
     public function update(User $user)
     { 
         if(Auth::user()->email == request('email')) {
-        
+
             $this->validate(request(), [
                 'name' => 'required',
               //  'email' => 'required|email|unique:users',
@@ -36,10 +36,10 @@ class UserController extends Controller
             $user->save();
 
             return back();
-        
+
         }
         else{
-        
+
             $this->validate(request(), [
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
@@ -52,8 +52,8 @@ class UserController extends Controller
 
             $user->save();
 
-            return back();  
-        
+            return back();
+
         }
     }
 }

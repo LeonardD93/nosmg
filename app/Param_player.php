@@ -11,14 +11,14 @@ class Param_player extends Model{
     protected $fillable = [
         'id', 'value'
     ];
-   
+
     public function player(){
-        return $this->belongsTo('App\Player', 'player_id');        
+        return $this->belongsTo('App\Player', 'player_id');
     }
     public function param(){
-        return $this->belongsTo('App\Param', 'param_id');        
+        return $this->belongsTo('App\Param', 'param_id');
     }
     public function name(){
-       return $this::param()->first()->name; 
+       return $this::param()->first()->name;
     }
 }
