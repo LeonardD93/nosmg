@@ -24,11 +24,16 @@ export default {
     } else {
       this.token = token
       localStorage.setItem('token', token)
+      console.log('token setato')
       this.refreshUser()
     }
   },
 
   logout() {
+    var params = {token: this.token}
+    this.app.$http.post('token/destroy', params).then(res => {
+      console.log(res)
+    })
     this.user = null
     this.token = null
     localStorage.removeItem('token')
@@ -41,8 +46,8 @@ export default {
       }
       //if(!this.token){
         this.app.$http.post('token', params).then(res => {
-          console.log("token-> "+res.data.token)
-          this.setToken(res.data.token)
+          console.log(res.data.value)
+          this.setToken(res.data.value)
         })
       //}
 

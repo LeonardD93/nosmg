@@ -3,7 +3,7 @@
     <Nav />
     <router-view/>
 
-    <pre>{{ $store.user }}</pre>
+    <!-- <pre>{{ $store.user }}</pre> -->
   </div>
 </template>
 
@@ -21,11 +21,11 @@ export default {
   created() {
     this.$store.init(this)
   },
-  methods: {
-    goToPage(name) {
-      this.$router.push({ name })
-    }
-  }
+  // methods: {
+  //   goToPage(name) {
+  //     this.$router.push({ name })
+  //   }
+  // }
 }
 </script>
 

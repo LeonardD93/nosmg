@@ -35,7 +35,7 @@ class Player extends Model
     }
     
     public function activites(){ // attivita a cui partecipo molti a molti
-        return $this->belongsToMany('App\Activity', 'activity_player','player_id', 'activity_id');    
+        return $this->belongsToMany('App\Activity', 'ActivityPlayer','player_id', 'activity_id');    
     }
      public function params(){
         return $this->belongsToMany('App\Param')->withPivot('value');//set a value in table ParamPlayer   

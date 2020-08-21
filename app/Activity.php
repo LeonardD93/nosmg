@@ -15,22 +15,22 @@ class Activity extends Model
     }
     
      public function players(){//relazione many to many salvate nella users_activities
-        return $this->belongsToMany('App\Player','activity_player', 'activity_id','player_id');
+        return $this->belongsToMany('App\Player','ActivityPlayer', 'activity_id','player_id');
     }
     
-    public function activity_type(){//piu attivita dello stesso tipo
+    public function ActivityType(){//piu attivita dello stesso tipo
         return $this->belongsTo('App\ActivityType', 'type_id');        
     }
    
-    public function activity_param(){
-        return $this->hasMany('App\Activity_param', 'activity_id');    
+    public function ActivityParam(){
+        return $this->hasMany('App\ActivityParam', 'activity_id');    
     }
     
     public function request_activity(){
         return $this->hasMany('App\RequestActivity', 'activity_id');
     } 
     
-    public function activity_player(){
+    public function ActivityPlayer(){
         return $this->hasMany('App\ActivityPlayer', 'activity_id');
     }
     

@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ActivityPlayer extends Model {
     public $timestamps = false;
-    protected $table = 'activity_player';
+    protected $table = 'ActivityPlayer';
     protected $fillable = [
-        'id', 
+        'id',
     ];
     public function player(){
-        return $this->belongsTo('App\Player', 'player_id');        
+        return $this->belongsTo('App\Player', 'player_id');
     }
      public function activity(){
-        return $this->belongsTo('App\Activity', 'activity_id');        
+        return $this->belongsTo('App\Activity', 'activity_id');
     }
-    
+
 }

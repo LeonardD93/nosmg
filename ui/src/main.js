@@ -33,11 +33,11 @@ http.interceptors.response.use(function (response) {
       alert('Errore di connessione')
     } else {
       if (res.status == 401) {
-        alert('Non autorizzato')
+        //alert('Non autorizzato')
         store.setToken(null)
         store.app.$router.push({name:'login'})
       } else {
-        alert('Errore '+res.status+': '+res.statusText)
+        //alert('Errore '+res.status+': '+res.statusText)
       }
     }
     return Promise.reject(error);

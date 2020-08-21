@@ -30,9 +30,10 @@ class AuthServiceProvider extends ServiceProvider
         Auth::viaRequest('ui-token', function($request) {
             $token = $request->header('Authorization');
             if (!$token) return null;
-            $lt = \App\LoginToken::where('value', $token)->where('expires_at', '<', Carbon::now())->first();
-            if ($lt) {
-                $lt->update(['expires_at'=>Carbon::now()]);
+            $lt = \App\LoginToken::where('value', $token)->where('expires_at', '>', Carbon::now())->first();
+
+            if ($lt) {// se esiste il token non scaduto aggiungo altri 30 minuti di validita
+                $lt->update(['expires_at'=>Carbon::now()->addMinutes(30)]);
                 return $lt->user;
             }
         });

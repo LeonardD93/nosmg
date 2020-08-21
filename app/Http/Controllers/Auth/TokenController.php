@@ -18,7 +18,7 @@ class TokenController extends Controller
         if($user && Hash::check($request->password,$user->password)){
             $loginToken = $user->loginTokens()->create([
                 'value' => LoginToken::generateToken(),
-                'expires_at' => Carbon::now(),
+                'expires_at' => Carbon::now()->addMinutes(30), //token valido 30 minuti da quanto non viene usato
             ]);
             // return 123;
                 // $loginToken=new LoginToken();
@@ -30,7 +30,8 @@ class TokenController extends Controller
         }
         else abort(400, 'credenziali errate');
     }
-    public function destroy($token){
+    public function destroy(Request $request){
+        $token=$request->token;
         $tk=LoginToken::where('value',$token)->firstOrFail();
         $tk->delete();
     }

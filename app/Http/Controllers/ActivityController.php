@@ -62,7 +62,7 @@ class ActivityController extends Controller
         $activities_out=[];
         foreach($activities as $activity){
             $organizer=$activity->organizer()->first()->name;
-            $type=$activity->activity_type()->first();
+            $type=$activity->ActivityType()->first();
             $type_name=$type->name;
             $macrocategory=$type->macrocategory;
             $activity['organizer_name']=$organizer;
@@ -86,9 +86,9 @@ class ActivityController extends Controller
         $user = Auth::user();
         if($user){
             $players=$user->players()->get();
-            $activity_types= ActivityType::get(); // controlli in base al game
+            $ActivityTypes= ActivityType::get(); // controlli in base al game
 
-            return view('activity.create', ['players'=>$players, 'activity_types'=>$activity_types]);
+            return view('activity.create', ['players'=>$players, 'ActivityTypes'=>$ActivityTypes]);
         }
 
     }
@@ -116,10 +116,10 @@ class ActivityController extends Controller
                 $activity->other_req=$request->other_req;
                 $activity->save();
 
-                $activity_player=new ActivityPlayer();
-                $activity_player->player_id=$request->organizer_id;
-                $activity_player->activity_id=$activity->id;
-                $activity_player->save();
+                $ActivityPlayer=new ActivityPlayer();
+                $ActivityPlayer->player_id=$request->organizer_id;
+                $ActivityPlayer->activity_id=$activity->id;
+                $ActivityPlayer->save();
                 return redirect() ->route('activities.edit', $activity);
             }
            else return redirect() ->route('activities.index')->with('error', 'No permissions');
@@ -138,8 +138,8 @@ class ActivityController extends Controller
         $is_organizer=self::user_organizer($user, $activity);
         if($user && $is_organizer){
             $players=$user->players()->get();
-            $activity_types= ActivityType::get();
-         return view('activity.edit', ['activity'=>$activity, 'players'=>$players, 'activity_types'=>$activity_types]);
+            $ActivityTypes= ActivityType::get();
+         return view('activity.edit', ['activity'=>$activity, 'players'=>$players, 'ActivityTypes'=>$ActivityTypes]);
         }
          else return redirect() ->route('activities.index')->with('error', 'No permissions');
     }
@@ -195,9 +195,9 @@ class ActivityController extends Controller
         $user=$user = Auth::user();
         $is_organizer=self::user_organizer($user, $activity);
         if($user && $is_organizer){
-            $activity_players=$activity->activity_player()->get();
-            foreach($activity_players as $activity_player ){
-                $activity_player->delete();
+            $ActivityPlayers=$activity->ActivityPlayer()->get();
+            foreach($ActivityPlayers as $ActivityPlayer ){
+                $ActivityPlayer->delete();
             }
             $activity->delete();
          return redirect() ->route('activities.index')->with('success', 'Deleted successful');

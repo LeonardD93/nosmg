@@ -26,7 +26,15 @@ Route::group(['middleware'=>'auth:api'], function() {
   Route::get('users/me', function() {
     return Auth::user();
   });
+
+Route::get('players', 'Api\PlayerController@index');
+
 });
 
+
+
+
+Route::post('token/destroy','Auth\TokenController@destroy');
 Route::post('token', 'Auth\TokenController@store');
-Route::get('token', 'Auth\TokenController@store');//solo per controllo
+
+//Route::get('token', 'Auth\TokenController@store');//solo per controllo

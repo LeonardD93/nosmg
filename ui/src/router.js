@@ -11,7 +11,7 @@ const router = new VueRouter({
       component: () => import('./views/home'),
     },
     {
-      path: '/utenti',
+      path: '/users',
       name: 'users',
       component: () => import('./views/users'),
     },
@@ -19,6 +19,26 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       component: () => import('./views/login'),
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('./views/register'),
+    },
+    {
+      path: '/invitations',
+      name: 'invitations',
+      component: () => import('./views/invitations'),
+    },
+    {
+      path: '/activities',
+      name: 'activities',
+      component: () => import('./views/activities'),
+    },
+    {
+      path: '/players',
+      name: 'players',
+      component: () => import('./views/players'),
     },
   ]
 })
