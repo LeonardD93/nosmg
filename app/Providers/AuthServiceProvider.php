@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,9 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         Auth::viaRequest('ui-token', function($request) {
             $token = $request->header('Authorization');
             if (!$token) return null;
-            return \App\User::whereHas('loginTokens', function($q) use ($token){
-                $q->where('value', $token);
-            })->first();
+            $lt = \App\LoginToken::where('value', $token)->where('expires_at', '<', Carbon::now())->first();
+            if ($lt) {
+                $lt->update(['expires_at'=>Carbon::now()]);
+                return $lt->user;
+            }
         });
     }
 }

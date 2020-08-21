@@ -11,7 +11,7 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-        \App\Game::updateOrCreate([
+        $nostale = \App\Game::updateOrCreate([
             'name' => 'Nostale'
         ], [
             'description' => 'a game',
@@ -21,5 +21,20 @@ class GameSeeder extends Seeder
         ], [
             'description' => 'Kinda ok',
         ]);
+
+            $admin = \App\User::firstOrCreate([
+                'email' => 'leonard77dam@yahoo.it',
+            ], [
+                'name' => 'Leonard',
+                'password' => bcrypt('secret'), //non prende password
+                'type' => 'admin',
+            ]);
+            $admin->players()->firstOrCreate([
+                'name' => 'prova',
+                'game_id' => $nostale->id,
+            ], [
+                'level' =>   1,
+                'class' => 'mage',
+            ]);
     }
 }

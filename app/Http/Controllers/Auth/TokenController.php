@@ -14,27 +14,24 @@ class TokenController extends Controller
 {
     public function store(Request $request)
     {
-        $user=User::where(
-            [['email','=', $request->email]]);
-        if($user && Hash::check($request->password,$user->value('password'))){
-            $loginToken=LoginToken::where('id', $user->value('id'));
-            if(!$loginToken){
-                $loginToken=new c();
-                $loginToken->user_id=$user->value('id');
-                $loginToken->generateLoginToken($user->value('id'));
-                $loginToken->expires_at=Carbon::now();
-                $loginToken->save();
-            }
-            else{
-                $loginToken->update(['expires_at'=>Carbon::now()]);
-            }
-            return  ['token'=>$loginToken->value('value')];
+        $user=User::where('email', $request->email)->first();
+        if($user && Hash::check($request->password,$user->password)){
+            $loginToken = $user->loginTokens()->create([
+                'value' => LoginToken::generateToken(),
+                'expires_at' => Carbon::now(),
+            ]);
+            // return 123;
+                // $loginToken=new LoginToken();
+                // $loginToken->user_id=$user->'password'));
+                // $loginToken->generateLoginToken($user->'password'));
+                // $loginToken->expires_at=Carbon::now();
+                // $loginToken->save();
+            return  $loginToken;
         }
         else abort(400, 'credenziali errate');
     }
     public function destroy($token){
-        $tk=LoginToken::where('value',$token);
-        if($tk)
-            $tk->delete();
+        $tk=LoginToken::where('value',$token)->firstOrFail();
+        $tk->delete();
     }
 }

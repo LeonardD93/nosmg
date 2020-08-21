@@ -4,6 +4,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class LoginToken extends Model{
     public $timestamps = false;
@@ -11,12 +12,19 @@ class LoginToken extends Model{
     protected $fillable = [
         'value', 'expires_at'
     ];
+    public $hidden = [
+            'id', 'user_id',
+    ];
 
     public function user(){
         return $this->belongsTo('App\User', 'user_id');
     }
     public function generateLoginToken($user_id) {
-        $this->value = substr(md5(rand(0, 9) . $this->email . $user_id. time()), 0, 32);
+        $this->value = Str::random(60);
         return $this->value;
+    }
+
+    static function generateToken() {
+        return Str::random(60);
     }
 }

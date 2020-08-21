@@ -11,14 +11,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\User::updateOrCreate([
-            'name' => 'Leonard'
-        ], [
-            'email' => 'leonard77dam@yahoo.it'
-        ], [
-            'password' => bcrypt('secret') //non prende password 
-        ],[
-            'type' => 'admin'
-        ]);
+    //     $admin = \App\User::updateOrCreate([
+    //         'email' => 'leonard77dam@yahoo.it',
+    //     ], [
+    //         'name' => 'Leonard',
+    //         'password' => bcrypt('secret'), //non prende password
+    //         'type' => 'admin',
+    //     ]);
+    //     $admin->players()->updateOrCreate([
+    //         'name' => 'prova',
+    //         'game_id' => \App\Game::where('name', 'like', 'nostale')->first()->id,
+    //     ]);
     }
 }
