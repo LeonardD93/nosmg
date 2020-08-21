@@ -14,7 +14,7 @@ class GameSeeder extends Seeder
         \App\Game::updateOrCreate([
             'name' => 'Nostale'
         ], [
-            'description' => 'Nostale besta game evah',
+            'description' => 'a game',
         ]);
         \App\Game::updateOrCreate([
             'name' => 'Dota 2'

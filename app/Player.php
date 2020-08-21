@@ -27,17 +27,17 @@ class Player extends Model
     }
     
     public function request_activity_sent(){// inviti inviati ad attività
-        return $this->hasMany('App\Request_activity','sender_id');
+        return $this->hasMany('App\RequestActivity','sender_id');
     }
     
     public function request_activity_recived(){ // inviti ricevuti alle attivita
-         return $this->hasMany('App\Request_activity','recipient_id');      
+         return $this->hasMany('App\RequestActivity','recipient_id');      
     }
     
     public function activites(){ // attivita a cui partecipo molti a molti
         return $this->belongsToMany('App\Activity', 'activity_player','player_id', 'activity_id');    
     }
      public function params(){
-        return $this->belongsToMany('App\Param')->withPivot('value');//set a value in table param_player   
+        return $this->belongsToMany('App\Param')->withPivot('value');//set a value in table ParamPlayer   
     }
 }

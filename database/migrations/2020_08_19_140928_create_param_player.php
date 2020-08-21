@@ -13,7 +13,7 @@ class CreateParamPlayer extends Migration
      */
     public function up()
     {
-        Schema::create('param_player', function (Blueprint $table) {
+        Schema::create('ParamPlayer', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('player_id')->unsigned();
             $table->bigInteger('param_id')->unsigned();
@@ -33,6 +33,6 @@ class CreateParamPlayer extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('param_player');
+        Schema::dropIfExists('ParamPlayer');
     }
 }

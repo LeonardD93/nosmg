@@ -31,5 +31,8 @@ class User extends Authenticatable
     public function players(){
         return $this->hasMany('App\Player','user_id');
     }
+    public function loginTokens(){
+        return $this->hasMany('App\LoginToken','user_id');
+    }
 
 }

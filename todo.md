@@ -1,6 +1,8 @@
 1 - creare migrazioni per tutte le tabelle
 2 - creare qualche seeder
 3 - convertire endpoint in api json
+  a) creare tabella token con sistema di autenticazione
+  b)creare le diverse chiamate api con header autenicazione token
 4 - rifare la ui con vue con le api
 
 

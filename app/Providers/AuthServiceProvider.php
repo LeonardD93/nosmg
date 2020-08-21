@@ -29,7 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Auth::viaRequest('ui-token', function($request) {
             $token = $request->header('Authorization');
             if (!$token) return null;
-            return \App\User::where('remember_token', $token)->first();
+            return \App\User::whereHas('loginTokens', function($q) use ($token){
+                $q->where('value', $token);
+            })->first();
         });
     }
 }

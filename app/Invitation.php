@@ -17,7 +17,6 @@ class Invitation extends Model
     ];
 
     public function generateInvitationToken($user_id) {
-
         $this->invitation_token = substr(md5(rand(0, 9) . $this->email . $user_id. time()), 0, 32);
     }
 

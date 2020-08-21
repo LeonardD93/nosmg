@@ -44,7 +44,7 @@ return [
         'api' => [
             'driver' => 'ui-token',
             'provider' => 'users',
-            'hash' => false,
+            'hash' => true,
         ],
     ],
 

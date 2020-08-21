@@ -5,9 +5,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Param_player extends Model{
+class ParamPlayer extends Model{
     public $timestamps = false;
-     protected $table = 'param_player';
+    protected $table = 'ParamPlayer';
     protected $fillable = [
         'id', 'value'
     ];

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Player;
 use App\Game;
 use App\Param;
-use App\Param_player;
+use App\ParamPlayer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,14 +47,14 @@ class PlayerController extends Controller
         $player->save();
         //dump($request->all());
         if($request->extra_params){
-            foreach($request->extra_params as $key=>$value){
-                $param_player=new Param_player();
-                $param_player->player_id=$player->id;
-                $param_player->param_id=$key;
-                $param_player->value=isset($value) ?$value:'';
-                $param_player->save();
-            }
+        foreach($request->extra_params as $key=>$value){
+            $ParamPlayer=new ParamPlayer();
+            $ParamPlayer->player_id=$player->id;
+            $ParamPlayer->param_id=$key;
+            $ParamPlayer->value=isset($value) ?$value:'';
+            $ParamPlayer->save();
         }
+    }
         return redirect() ->route('players.edit', $player);
     }
 
@@ -72,7 +72,7 @@ class PlayerController extends Controller
        if($player->user_id==$user->id){
            $params=Param::get()->where('active')->where('game_id',$player->game_id);
            foreach($params as $param){
-               $this::add_extra_param_player($param, $player);
+               $this::add_extra_ParamPlayer($param, $player);
            }
             $extra_params=$player->params()->get();
           return view('player.edit',['player'=>$player,'extra_params'=>$extra_params,'games'=>$games]);
@@ -142,7 +142,7 @@ class PlayerController extends Controller
             return redirect() ->route('players.index')->with('error', 'No permissions');
 
     }
-    public function add_extra_param_player($param, $player){
+    public function add_extra_ParamPlayer($param, $player){
         $extra_params=$player->params()->get();
         $found=0;
         foreach($extra_params as $extra){
@@ -150,11 +150,11 @@ class PlayerController extends Controller
                  $found=1;
         }
         if(!$found){
-            $param_player=new Param_player();
-            $param_player->player_id=$player->id;
-            $param_player->param_id=$param->id;
-            $param_player->value='';
-            $param_player->save();
+            $ParamPlayer=new ParamPlayer();
+            $ParamPlayer->player_id=$player->id;
+            $ParamPlayer->param_id=$param->id;
+            $ParamPlayer->value='';
+            $ParamPlayer->save();
         }
 
     }

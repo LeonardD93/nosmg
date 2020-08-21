@@ -21,10 +21,14 @@ class CreateUsers extends Migration
             $table->string('password');
             $table->string('remember_token')->nullable();
             $table->string('type')->default('default');
+            $table->string('api_token')->unique()->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });
     }
+    //$2y$10$QiasqqI.cDvsoTjlTcQU5e04arDDw4OwCvw9ZsBEsmZ1EOkbsi0Oe
+    //Leonard	leonard77dam@yahoo.it	$2y$10$QiasqqI.cDvsoTjlTcQU5e04arDDw4OwCvw9ZsBEsmZ1EOkbsi0Oe	NULL	admin	2020-08-20 08:11:44	2020-08-20 08:11:44	NULL
+
 
     /**
      * Reverse the migrations.

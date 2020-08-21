@@ -27,3 +27,6 @@ Route::group(['middleware'=>'auth:api'], function() {
     return Auth::user();
   });
 });
+
+Route::post('token', 'Auth\TokenController@store');
+Route::get('token', 'Auth\TokenController@store');//solo per controllo

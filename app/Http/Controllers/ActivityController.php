@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use App\User;
-use App\Activity_type;
-use \App\Activity_player;
+use App\ActivityType;
+use \App\ActivityPlayer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,7 +86,7 @@ class ActivityController extends Controller
         $user = Auth::user();
         if($user){
             $players=$user->players()->get();
-            $activity_types= Activity_type::get(); // controlli in base al game
+            $activity_types= ActivityType::get(); // controlli in base al game
 
             return view('activity.create', ['players'=>$players, 'activity_types'=>$activity_types]);
         }
@@ -116,7 +116,7 @@ class ActivityController extends Controller
                 $activity->other_req=$request->other_req;
                 $activity->save();
 
-                $activity_player=new Activity_player();
+                $activity_player=new ActivityPlayer();
                 $activity_player->player_id=$request->organizer_id;
                 $activity_player->activity_id=$activity->id;
                 $activity_player->save();
@@ -138,7 +138,7 @@ class ActivityController extends Controller
         $is_organizer=self::user_organizer($user, $activity);
         if($user && $is_organizer){
             $players=$user->players()->get();
-            $activity_types= Activity_type::get();
+            $activity_types= ActivityType::get();
          return view('activity.edit', ['activity'=>$activity, 'players'=>$players, 'activity_types'=>$activity_types]);
         }
          else return redirect() ->route('activities.index')->with('error', 'No permissions');

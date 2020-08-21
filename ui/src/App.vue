@@ -1,13 +1,6 @@
 <template lang="html">
   <div id="app">
-    <div class="main-menu">
-      <a href="#" @click="goToPage('home')">home</a>
-      <a href="#" @click="goToPage('users')">Utenti</a>
-
-      <a v-if="!$store.user" href="#" @click="goToPage('login')">Login</a>
-      <a v-else href="#" @click="$store.logout()">Logout {{ $store.user.name }}</a>
-    </div>
-
+    <Nav />
     <router-view/>
 
     <pre>{{ $store.user }}</pre>
@@ -15,7 +8,11 @@
 </template>
 
 <script>
+import Nav from './components/partials/nav.vue';
 export default {
+  components: {
+   Nav
+ },
   data () {
     return {
       $store: this.$store,

@@ -16,7 +16,7 @@ class Param extends Model{
     public function activity_param(){
         return $this->hasMany('App\Activity_param', 'param_id');    
     }
-    public function param_player(){
-        return $this->hasMany('App\Param_player', 'param_id');    
+    public function ParamPlayer(){
+        return $this->hasMany('App\ParamPlayer', 'param_id');    
     }
 }

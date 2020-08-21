@@ -11,7 +11,7 @@ class Game extends Model
     ];
       
     public function activities_type(){
-        return $this->hasMany('App\Activity_type', 'game_id');
+        return $this->hasMany('App\ActivityType', 'game_id');
     }
     public function params(){
         return $this->hasMany('App\Param', 'game_id');

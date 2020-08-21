@@ -13,8 +13,8 @@ export default {
       this.user = null
     } else {
       this.app.$http('users/me').then(res => {
-        this.user = res.data
-      })
+         this.user = res.data
+       })
     }
   },
 
@@ -32,5 +32,21 @@ export default {
     this.user = null
     this.token = null
     localStorage.removeItem('token')
+  },
+
+  get_token(email, password){
+    var params = {
+        email: email,
+        password: password,
+      }
+      //if(!this.token){
+        this.app.$http.post('token', params).then(res => {
+          console.log("token-> "+res.data.token)
+          this.setToken(res.data.token)
+        })
+      //}
+
   }
+
+
 }

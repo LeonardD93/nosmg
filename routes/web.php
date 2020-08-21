@@ -43,6 +43,7 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::resource('activities', 'ActivityController');
 Route::resource('players', 'PlayerController');
 
+
 /*
  *
 Verb        URI                         Action      RouteName

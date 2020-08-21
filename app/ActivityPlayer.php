@@ -3,11 +3,11 @@
 namespace App;// questa classe in realta non dovrebbe esserci in quanto è la classe intermedia molti a molti
 use Illuminate\Database\Eloquent\Model;
 /**
- * Description of Activity_player
+ * Description of ActivityPlayer
  *
  * @author Leonard
  */
-class Activity_player extends Model {
+class ActivityPlayer extends Model {
     public $timestamps = false;
     protected $table = 'activity_player';
     protected $fillable = [

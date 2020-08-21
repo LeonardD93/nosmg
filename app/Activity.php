@@ -19,7 +19,7 @@ class Activity extends Model
     }
     
     public function activity_type(){//piu attivita dello stesso tipo
-        return $this->belongsTo('App\Activity_type', 'type_id');        
+        return $this->belongsTo('App\ActivityType', 'type_id');        
     }
    
     public function activity_param(){
@@ -27,11 +27,11 @@ class Activity extends Model
     }
     
     public function request_activity(){
-        return $this->hasMany('App\Request_activity', 'activity_id');
+        return $this->hasMany('App\RequestActivity', 'activity_id');
     } 
     
     public function activity_player(){
-        return $this->hasMany('App\Activity_player', 'activity_id');
+        return $this->hasMany('App\ActivityPlayer', 'activity_id');
     }
     
 }

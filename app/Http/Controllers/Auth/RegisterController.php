@@ -64,8 +64,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'type' => User::DEFAULT_TYPE,
+            //'api_token' => Str::random(60),
         ]);
-
     }
 
     public function requestInvitation() {// request an invitation
@@ -76,17 +76,14 @@ class RegisterController extends Controller
         $invitation_token = $request->get('invitation_token');
         $invitation = Invitation::where('invitation_token', $invitation_token)->firstOrFail();
         $email = $invitation->email;
-
         return view('auth.register', compact('email'));
     }
 
     protected function store(Request $request){
-         $now=Carbon::now()->toDateTimeString();
-
+        $now=Carbon::now()->toDateTimeString();
         $usr=User::where('email',$request->email)->first();
         if($usr)
            return redirect()->route('login')->with('error', 'You are already registered with this email');
-
 
         $validate=$this->validate(request(), [
            'name' => ['required', 'string', 'max:255'],
@@ -100,16 +97,13 @@ class RegisterController extends Controller
             $user->name = request('name');
             $user->email = request('email');
             $user->password = bcrypt(request('password'));
-
             $user->save();
             $invitation->registered_at=$now;
             $invitation->save();
-
            return redirect()->route('login')->with('success', 'Registered successful');
         }
         else {
             redirect()->route('login')->with('error', 'Something went wrong or invalid invitation');
         }
     }
-
 }
