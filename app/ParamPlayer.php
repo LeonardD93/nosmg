@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ParamPlayer extends Model{
     public $timestamps = false;
-    protected $table = 'paramPlayer';
+    protected $table = 'param_player';//tabella many to many 
     protected $fillable = [
         'id', 'value'
     ];

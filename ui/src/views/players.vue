@@ -73,7 +73,7 @@ export default {
     getPlayers() {
       this.$http.get('players').then(res => {
         console.log(res.data)
-        this.players = res.data
+        this.players = res.data.data
       })
     },
 
