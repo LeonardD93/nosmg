@@ -23,6 +23,8 @@ export default {
       this.is_loading = true
       if(this.input.email != "" && this.input.password != "") {
         this.token=this.$store.get_token(this.input.email, this.input.password)
+          //this.$router.push({name:'home'})
+          this.$router.push('home').catch(err => err)
 
       } else {
         console.log("A email and password must be not empty");

@@ -6,7 +6,23 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      invitations: null,
+      paramas: null,
+    }
+  },
+
+  created() {
+    if(localStorage.getItem('token'))
+      this.$store.refreshData()
+    else
+      this.$router.push('login')
+  },
+  methods: {
+  },
+}
 </script>
 
 <style lang="scss">

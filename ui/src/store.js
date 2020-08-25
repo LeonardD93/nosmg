@@ -2,6 +2,7 @@ export default {
   app: null,
   token: localStorage.getItem('token'),
   user: null,
+  data:null,
 
   init(app) {
     this.app = app
@@ -16,6 +17,22 @@ export default {
          this.user = res.data
        })
     }
+  },
+  refreshData(){
+    if (!this.token) {
+      console.log('qua')
+      // cancello i dati in locale
+    } else {
+      this.app.$http('data').then(res => {
+        console.log(res.data)
+         this.data = res.data
+       })
+     }
+  },
+  setData(data){
+    this.data = data
+    localStorage.setItem('data', JSON.stringify(data)) // support only string rendere piu complesso e salvare in singole var in base alle classi
+    console.log('dati setati');
   },
 
   setToken(token) {

@@ -11,7 +11,6 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        $activity=Activity::get();
-        return ActivityResource::collection($activity);
+        return ActivityResource::collection(Activity::get());
     }
 }

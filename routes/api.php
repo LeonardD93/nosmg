@@ -29,6 +29,7 @@ Route::group(['middleware'=>'auth:api'], function() {
 
 Route::get('players', 'Api\PlayerController@index');
 Route::get('activities', 'Api\ActivityController@index');
+Route::get('data','Api\DataController@index');
 
 });
 

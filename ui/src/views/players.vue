@@ -2,9 +2,12 @@
   <div class="player_index">
     <h1>Players</h1>
     <div class="row">
-        <div class="col-sm-6">
-            <a href='#}' class="btn btn-primary ">#Add new##</a>
-        </div>
+
+            <!-- <div class='col-sm-1'></div> -->
+            <div class="col-sm-6">
+                  <newPlayer />
+            </div>
+      
     </div>
 
 
@@ -54,7 +57,11 @@
 </template>
 
 <script>
+import newPlayer from '../components/player/newPlayer.vue';
 export default {
+  components: {
+        newPlayer
+    },
   data () {
     return {
       players: null,

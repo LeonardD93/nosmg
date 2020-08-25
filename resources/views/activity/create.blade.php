@@ -19,22 +19,22 @@
                                         <input id="name" type="text" class="form-control" name="name" required>
                                     </div>
                                 </div>
-                            
+
                             @if($players->count()>1)
                             <div class="form-group">
                                  <label for="organizer_id" class="col-md-4 control-label">{{__('Player')}}</label>
                                   <div class="col-md-6">
                                       <select id="organizer_id"  class="form-control" name="organizer_id" >
-                                            @foreach ($players as $player) 
+                                            @foreach ($players as $player)
                                                 <option value="{{$player->id}}">{{$player->name}}</option>
-                                            @endforeach  
+                                            @endforeach
                                       </select>
                                   </div>
                             </div>
                             @else
                                  <input id="organizer_id" type="hidden" class="form-control" name="organizer_id" value="{{$players[0]->id}}" >
                             @endif
-                             
+
                             <div class="form-group">
                                 <label for="start_date" class="col-md-4 control-label">{{__('Start date')}}</label>
                                 <div class="col-md-6">
@@ -53,34 +53,34 @@
                                     <input id="level_req" type="number" class="form-control" name="level_req" required>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                  <label for="type_id" class="col-md-4 control-label">{{__('Activity type')}}</label>
                                   <div class="col-md-6">
                                       <select id="type_id"  class="form-control" name="type_id" >
-                                            @foreach ($activity_types as $activity_type)
+                                            @foreach ($ActivityTypes as $activity_type)
                                                 <option value="{{$activity_type->id}}">{{$activity_type->name}}</option>
-                                            @endforeach  
+                                            @endforeach
                                       </select>
                                   </div>
                             </div>
-                            
+
                              <div class="form-group">
                                 <label for="users_number" class="col-md-4 control-label">{{__('User number')}}</label>
                                 <div class="col-md-6">
                                     <input id="users_number" type="number" class="form-control" name="users_number" required>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="other_req" class="col-md-4 control-label">{{__('Other requests')}}</label>
                                 <div class="col-md-6">
                                     <textarea id="other_req" name="other_req"></textarea>
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">

@@ -2,8 +2,9 @@
   <div class="">
     <h1>Activities</h1>
     <div class="row">
+        <!-- <div class='col-sm-1'></div> -->
         <div class="col-sm-6">
-            <a href='#}' class="btn btn-primary ">#Add new##</a>
+              <newActivity />
         </div>
     </div>
 
@@ -34,13 +35,6 @@
                   <td>{{activity.users_number}}</td>
                   <td>{{activity.other_req}}</td>
 
-                  <!-- <td>{{activity.type_name}}</td>
-
-                  <td>{{activity.level}}</td>
-                  <td>{{activity.class}}</td>
-
-                  <td>
-                  </td> -->
               </tr>
           </tbody>
       </table>
@@ -49,7 +43,13 @@
 </template>
 
 <script>
+import newActivity from '../components/activity/newActivity.vue';
 export default {
+    components: {
+        newActivity
+    },
+
+
     data () {
         return {
             activities: null,
@@ -70,6 +70,7 @@ export default {
         this.activities = res.data.data
       })
     },
+
 
     // deleteUser(game) {
     //   this.$http.delete('elimina/'+game.id).then(() => {
