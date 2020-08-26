@@ -6,7 +6,8 @@ class ParamPlayerResource extends JsonResource
 {
     public function toArray($request){
         return[
-            'name'=>$this->name(),
+            'id'=>$this->id,
+            'name'=>$this->getName(),
             'value'=>$this->value,
         ];
     }

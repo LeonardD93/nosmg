@@ -6,10 +6,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class ParamPlayer extends Model{
-    public $timestamps = false;
-    protected $table = 'param_player';//tabella many to many 
+    //public $timestamps = false;
+    protected $table = 'param_player';//tabella many to many
     protected $fillable = [
-        'id', 'value'
+        'id', 'value','created_at','updated_at'
     ];
 
     public function player(){
@@ -18,7 +18,7 @@ class ParamPlayer extends Model{
     public function param(){
         return $this->belongsTo('App\Param', 'param_id');
     }
-    public function name(){
-       return $this::param()->first()->name;
+    public function getParamNameAttribute(){
+       return $this->param->name;
     }
 }

@@ -48,8 +48,6 @@ export default {
     components: {
         newActivity
     },
-
-
     data () {
         return {
             activities: null,
@@ -64,19 +62,16 @@ export default {
   },
 
   methods: {
-    getActivities() {
-      this.$http.get('activities').then(res => {
-        console.log(res.data)
-        this.activities = res.data.data
-      })
+    getActivities(refresh=false) {
+        if(!refresh)
+            this.activities=JSON.parse( localStorage.getItem('activities'))
+        else{
+            this.$http.get('activities').then(res => {
+                this.activities = res.data.data
+                localStorage.setItem('activities', JSON.stringify(res.data.data))
+            })
+        }
     },
-
-
-    // deleteUser(game) {
-    //   this.$http.delete('elimina/'+game.id).then(() => {
-    //     this.refreshGames()
-    //   })
-    // },
   },
 }
 </script>

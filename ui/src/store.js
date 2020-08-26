@@ -6,7 +6,8 @@ export default {
 
   init(app) {
     this.app = app
-    this.refreshUser()
+    //this.refreshUser()
+    this.refreshData()
   },
 
   refreshUser() {
@@ -26,13 +27,14 @@ export default {
       this.app.$http('data').then(res => {
         console.log(res.data)
          this.data = res.data
+         // localStorage.setItem('activities', JSON.stringify(res.data.activities))
+         // localStorage.setItem('activitiesType', JSON.stringify(res.data.activitiesType))
+         // localStorage.setItem('games', JSON.stringify(res.data.games))
+         // localStorage.setItem('params', JSON.stringify(res.data.params))
+         // localStorage.setItem('players', JSON.stringify(res.data.players))
+         // localStorage.setItem('user', JSON.stringify(res.data.user))
        })
      }
-  },
-  setData(data){
-    this.data = data
-    localStorage.setItem('data', JSON.stringify(data)) // support only string rendere piu complesso e salvare in singole var in base alle classi
-    console.log('dati setati');
   },
 
   setToken(token) {
@@ -42,7 +44,7 @@ export default {
       this.token = token
       localStorage.setItem('token', token)
       console.log('token setato')
-      this.refreshUser()
+      //this.refreshUser()
     }
   },
 
@@ -68,7 +70,10 @@ export default {
         })
       //}
 
-  }
+  },
 
 
+  clone(obj) {
+    return JSON.parse(JSON.stringify(obj))
+  },
 }

@@ -13,7 +13,27 @@ class PlayerResource extends JsonResource
             'name'=>$this->name,
             'level'=>$this->level,
             'class'=>$this->class,
-            'extra_params'=>ParamPlayerResource::collection($this->paramPlayer()->get()),
+            'extra_params'=>$this->paramPlayer->pluck('value', 'param_name'),
         ];
+        // {
+        //     "specialist" => 3,
+        //     "asdf" => 123,
+        // }
+        // player.params.specialist
+        // player.params.specialistasd = 123
+        // [
+        //     { "name": "specialist", value: 123 },
+        //     { "name": "specialist", value: 123 },
+        //     { "name": "specialist", value: 123 },
+        // ]
+        // let info = player.params.find(param => param.name == 'specialist')
+        // if (info) return info.value
+        // else return null
+        //
+        // let info = player.params.find(param => param.name == 'specialist')
+        // if (info) info.value = 123
+        // else player.params.push({ name: 'specialist', value: 123 })
+
+
     }
 }

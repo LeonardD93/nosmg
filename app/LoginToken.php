@@ -7,7 +7,7 @@ class LoginToken extends Model{
     public $timestamps = false;
     protected $table = 'login_tokens';
     protected $fillable = [
-        'value', 'expires_at'
+        'value', 'expires_at','created_at','updated_at'
     ];
     public $hidden = [
             'id', 'user_id',

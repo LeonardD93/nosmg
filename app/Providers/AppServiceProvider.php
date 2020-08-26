@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $query_count = 0;
+        \DB::listen(function ($query) use (&$query_count) {
+            $query_count++;
+            \Log::debug("[$query_count] ".$query->sql." ".json_encode($query->bindings));
+        });
     }
 
     /**

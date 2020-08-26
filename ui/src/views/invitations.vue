@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <h1>Invitations</h1>
-
+    <button type="button" name="button" @click="$store.refreshData()">aggiorna</button>
   </div>
 </template>
 
@@ -13,7 +13,6 @@ export default {
       paramas: null,
     }
   },
-
   created() {
     if(localStorage.getItem('token'))
       this.$store.refreshData()

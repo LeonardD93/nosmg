@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invitation extends Model
 {
     protected $fillable = [
-        'id','email', 'invitation_token', 'created_at','message','referer_id'
+        'id','email', 'invitation_token', 'created_at','message','referer_id','created_at','updated_at'
     ];
 
     public function generateInvitationToken($user_id) {

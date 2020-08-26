@@ -9,9 +9,9 @@ class ParamResource extends JsonResource
     public function toArray($request)
     {
         return[
-            'name'=>$this->name,
-            'active'=>$this->active,
             'id'=>$this->id,
+            'name'=>$this->name,
+            'active'=>$this->active,            
             'multiple'=>$this->multiple,
             'required'=>$this->required,
             'type'=>$this->type,

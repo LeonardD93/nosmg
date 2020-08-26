@@ -41,6 +41,8 @@ class Player extends Model
         return $this->belongsToMany('App\Param')->withPivot('value');//set a value in table param_player
     }
     public function paramPlayer(){
-        return $this->hasMany('App\ParamPlayer');
+        return $this->hasMany(ParamPlayer::class);
     }
+
+
 }

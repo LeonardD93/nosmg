@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                   <newPlayer />
             </div>
-      
+
     </div>
 
 
@@ -79,7 +79,7 @@ export default {
   methods: {
     getPlayers() {
       this.$http.get('players').then(res => {
-        console.log(res.data)
+        //console.log(res.data)
         this.players = res.data.data
       })
     },

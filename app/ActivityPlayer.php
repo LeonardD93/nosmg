@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
  * @author Leonard
  */
 class ActivityPlayer extends Model {
-    public $timestamps = false;
-    protected $table = 'ActivityPlayer';
+
+    protected $table = 'activity_player';
     protected $fillable = [
-        'id',
+        'id','created_at','updated_at'
     ];
     public function player(){
         return $this->belongsTo('App\Player', 'player_id');

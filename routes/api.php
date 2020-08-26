@@ -27,14 +27,14 @@ Route::group(['middleware'=>'auth:api'], function() {
     return Auth::user();
   });
 
-Route::get('players', 'Api\PlayerController@index');
-Route::get('activities', 'Api\ActivityController@index');
-Route::get('data','Api\DataController@index');
+  Route::get('players', 'Api\PlayerController@index');
+  Route::get('activities', 'Api\ActivityController@index');
+  Route::get('data','Api\DataController@index');
+  Route::post('activity','Api\ActivityController@store');
+  Route::PUT('activities/{id}', 'Api\ActivityController@store');
+  Route::post('players', 'Api\PlayerController@store');
 
 });
-
-
-
 
 Route::post('token/destroy','Auth\TokenController@destroy');
 Route::post('token', 'Auth\TokenController@store');

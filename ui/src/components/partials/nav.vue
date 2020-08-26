@@ -27,7 +27,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto" v-if="!$store.user">
+                <ul class="navbar-nav mr-auto" v-if="!$store.token">
                     <li class="nav-item">
                         <a class="nav-link" href="#" @click="goToPage('login')">Login</a>
                     </li>

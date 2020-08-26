@@ -7,17 +7,17 @@ class ActivityResource extends JsonResource
 {
     public function toArray($request)
     {
-        $type=$this->ActivityType()->first();
         return [
+            'id'=>$this->id,
             'name'=>$this->name,
-            'organizer_name'=>$this->organizer()->first()->name,
+            'organizer_name'=>$this->organizer->name,
             'start_date'=>$this->start_date,
             'level_req'=>$this->level_req,
-            'type_name'=>$type->name,
-            'macrocategory'=>$type->macrocategory,
+            'type_name'=>$this->ActivityType->name,
+            'macrocategory'=>$this->ActivityType->macrocategory,
             'users_number'=>$this->users_number,
             'other_req'=>$this->other_req,
-            'user_organizer'=>Auth::user()->players()->where('id', $this->organizer_id)->exists(),
+            'user_organizer_id'=>$this->organizer->user->id,
         ];
     }
 }
