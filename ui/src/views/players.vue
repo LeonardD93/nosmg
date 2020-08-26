@@ -8,24 +8,24 @@
                   <newPlayer />
             </div>
 
-    </div>
+          </div>
 
 
-      <table id='player_table' class="table table-striped table-bordered">
-          <thead>
-              <tr>
+           <table id='player_table' class="table table-striped table-bordered">
+               <thead>
+                   <tr>
 
-                  <th>#Name##</th>
-                  <!--<th>#Game##</th>-->
-                  <th>#Level##</th>
-                  <th>#Class##</th>
-                  <!-- @foreach($params as $param)
-                   <th>{{$param->name}}</th>
-                  @endforeach -->
-                  <th>#Actions##</th>
-              </tr>
-          </thead>
-          <tbody>
+                       <th>#Name##</th>
+                       <!--<th>#Game##</th>-->
+                       <th>#Level##</th>
+                       <th>#Class##</th>
+                       <!-- @foreach($params as $param)
+                        <th>{{$param->name}}</th>
+                       @endforeach -->
+                       <th>#Actions##</th>
+                   </tr>
+               </thead>
+               <tbody>
               <tr v-for="player in players" v-bind:key="player.id">
                   <td>{{player.name}}</td>
                   <!--<td>{{player.game()->first()->name}}</td>-->

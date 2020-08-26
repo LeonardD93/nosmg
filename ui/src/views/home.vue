@@ -6,6 +6,7 @@
       </template>
       <template v-else>
         Ci sono {{ games.length }} giochi
+        {{ $t('hello') }}
         <b-card v-for="game in games" :key="game.id" class="my-3">
           <b>{{ game.name }}</b>
 

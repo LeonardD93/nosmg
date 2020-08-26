@@ -1,3 +1,6 @@
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import 'bootstrap-css-only/css/bootstrap.min.css'
+import 'mdbvue/lib/mdbvue.css'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -14,6 +17,11 @@ import axios from 'axios'
 const http = Vue.prototype.$http = axios.create({
   baseURL: 'http://nosmg.x/api/',
 })
+
+// import * as mdbvue from 'mdbvue'
+// for (const component in mdbvue) {
+// Vue.component(component, mdbvue[component])
+// }
 
 http.interceptors.request.use(function (config) {
   if (store.token) {
@@ -45,7 +53,18 @@ http.interceptors.response.use(function (response) {
 
 Vue.config.productionTip = false
 
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n)
+
+import messages from './i18n.js'
+const i18n = new VueI18n({
+  locale: 'it',
+  messages,
+})
+
+
 new Vue({
+  i18n,
   render: h => h(App),
   router,
 }).$mount('#app')
