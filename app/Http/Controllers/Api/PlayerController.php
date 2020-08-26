@@ -7,15 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PlayerResource;
 use App\Http\Resources\ParamPlayerResource;
-//use App\Param;
+use App\Player;
+use App\ParamPlayer;
 
 class PlayerController extends Controller {
     public function index(){
         return PlayerResource::collection(Auth::user()->players);
     }
 
-    public function store(Request $request)
+    public function storeUpdate(Request $request)
     {
+        //return $request;
         $user = Auth::user();
         if($user){
             $player = request('id')
@@ -44,6 +46,6 @@ class PlayerController extends Controller {
             }
             return $player;
         }
-        else return ['error'=>'id not found'];
+        else return ['error'=>'not allowed'];
     }
 }

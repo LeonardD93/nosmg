@@ -1,15 +1,15 @@
 <template>
 <div>
-    <a class="btn btn-primary" v-b-modal.modal-1>#Add new##</a>
+    <a class="btn btn-primary" v-b-modal.modal-1>{{ $t('addNew') }}</a>
     <b-modal id="modal-1" title="Add new Activity" hide-footer>
         <div class="form-group">
-            <label for="name" class="col-md-4 control-label">#Name##</label>
+            <label for="name" class="col-md-4 control-label">{{ $t('name') }}</label>
             <div class="col-md-6">
                 <input id="name" v-model="activity.name" type="text" class="form-control" name="name" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="player" class="col-md-4 control-label">#player##</label>
+            <label for="player" class="col-md-4 control-label">{{ $t('Player') }}</label>
             <select v-model="activity.organizer_id">
                 <option v-for="player in players" v-bind:value="player.id" v-bind:key="player.id">
                     {{ player.name }}
@@ -17,25 +17,25 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="start_date" class="col-md-4 control-label">#Start date##</label>
+            <label for="start_date" class="col-md-4 control-label">{{ $t('Start_date') }}</label>
             <div class="col-md-6">
                 <input id="start_date" v-model="activity.start_date" type="date" class="form-control" name="start_date" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="start_time"  class="col-md-4 control-label">#Start date time##</label>
+            <label for="start_time"  class="col-md-4 control-label">{{ $t('Date_time') }}</label>
             <div class="col-md-6">
                 <input id="start_time" v-model="activity.start_time" type="time" class="form-control" name="start_time" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="level_req" class="col-md-4 control-label">#Level required##</label>
+            <label for="level_req" class="col-md-4 control-label">{{ $t('Level_required') }}</label>
             <div class="col-md-6">
                 <input id="level_req" v-model="activity.level_req" min="0" max="99" type="number" class="form-control" name="level_req" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="activityType" class="col-md-4 control-label">#Activity type##</label>
+            <label for="activityType" class="col-md-4 control-label">{{ $t('Activity_type') }}</label>
             <select v-model="activity.type_id">
                 <option v-for="activityType in activitiesType" v-bind:value="activityType.id" v-bind:key="activityType.id">
                     {{ activityType.name }}
@@ -43,13 +43,13 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="users_number" class="col-md-4 control-label">#Users Number##</label>
+            <label for="users_number" class="col-md-4 control-label">{{ $t('Users_number') }}</label>
             <div class="col-md-6">
                 <input id="users_number" v-model="activity.users_number" min="0" max="99" type="number" class="form-control" name="users_number" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="other_req" class="col-md-4 control-label">#Other Req##</label>
+            <label for="other_req" class="col-md-4 control-label">{{ $t('Other_requests') }}</label>
             <div class="col-md-6">
                 <textarea id="other_req" v-model="activity.other_req"  class="form-control" name="other_req" ></textarea>
             </div>
@@ -57,7 +57,7 @@
 <!-- da scegliere il player, in base al player le activity type devono cambiare in quanto sono associate a un gioco
 quindi nel for activity type ci deve essere if player.game_id==activityType.game_id-->
 
-        <b-button class="mt-3" block @click="addNew()">#Add new##</b-button>
+        <b-button class="mt-3" block @click="addNew()">{{ $t('addNew') }}</b-button>
     </b-modal>
 </div>
 </template>

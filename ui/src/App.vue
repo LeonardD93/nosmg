@@ -34,7 +34,9 @@ export default {
 //
 // $image-path: '~@/../mdb/mdbvue/img';
 // @import '~@/../mdb/mdbvue/scss/mdb-free.scss';
-
+a:not([href]){
+  color:white;
+}
 .main-menu {
   a {
     margin: 1rem;

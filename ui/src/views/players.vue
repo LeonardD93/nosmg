@@ -1,95 +1,85 @@
 <template lang="html">
-  <div class="player_index">
-    <h1>Players</h1>
-    <div class="row">
-
+    <div class="player_index">
+        <h1>{{ $t('players') }}</h1>
+        <div class="row">
             <!-- <div class='col-sm-1'></div> -->
             <div class="col-sm-6">
-                  <newPlayer />
+                <newUpdate/>
             </div>
+        </div>
+        <table id='player_table' class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>{{ $t('name') }}</th>
+                    <!--<th>{{ $t('Game') }}</th>-->
+                    <th>{{ $t('Level') }}</th>
+                    <th>{{ $t('Class') }}</th>
+                    <th>{{$t('extra_params')}}</th>
 
-          </div>
-
-
-           <table id='player_table' class="table table-striped table-bordered">
-               <thead>
-                   <tr>
-
-                       <th>#Name##</th>
-                       <!--<th>#Game##</th>-->
-                       <th>#Level##</th>
-                       <th>#Class##</th>
-                       <!-- @foreach($params as $param)
-                        <th>{{$param->name}}</th>
-                       @endforeach -->
-                       <th>#Actions##</th>
-                   </tr>
-               </thead>
-               <tbody>
-              <tr v-for="player in players" v-bind:key="player.id">
-                  <td>{{player.name}}</td>
-                  <!--<td>{{player.game()->first()->name}}</td>-->
-                  <td>{{player.level}}</td>
-                  <td>{{player.class}}</td>
-
-                   <!-- @foreach(player.params()->get() as $param)
-                   <td>{{$param->pivot->value}}</td>
-                   @endforeach -->
-
-                  <td>
-                      <!-- @if($user->id==player.user_id)
-                          <a class="btn btn-info btn-sm" href='{{route('players.edit', $player)}}'>edit</a>
-                          <form action="{{route('players.destroy', $player)}}" method="post" data-message="Delete this Thing?" class="delete_form">
-                               @method('DELETE')
-                               @csrf
-                              <input class="btn btn-info btn-sm" type="submit" value="Delete" />
-
-                          </form>
-                      @endif -->
-
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-
-
-  </div>
+                    <th>{{ $t('Actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="player in $store.data.players" v-bind:key="player.id">
+                    <td>{{player.name}}</td>
+                    <!--<td>{{player.game()->first()->name}}</td>-->
+                    <td>{{player.level}}</td>
+                    <td>{{player.class}}</td>
+                    <td>
+                        <div v-for="(item, index) in player.extra_params" v-bind:key="item.id">
+                            {{index}}:{{item}}
+                        </div>
+                    </td>
+                    <td>
+                         <newUpdate v-bind:player='player' />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
-import newPlayer from '../components/player/newPlayer.vue';
+import newUpdate from '../components/player/newUpdate.vue';
 export default {
-  components: {
-        newPlayer
+    components: {
+        newUpdate
     },
-  data () {
-    return {
-      players: null,
-      paramas: null,
-    }
-  },
-
-  created() {
-    if(localStorage.getItem('token'))
-      this.getPlayers()
-    else
-      this.$router.push('login')
-  },
-
-  methods: {
-    getPlayers() {
-      this.$http.get('players').then(res => {
-        //console.log(res.data)
-        this.players = res.data.data
-      })
+    data() {
+        return {
+            //players: null,
+            //paramas: null,
+           //  test:[
+           //     {name: 'Davido', genre: 'afrobeats', country: 'Nigeria'},
+           //     {name: 'Burna Boy', genre: 'afrobeats', country: 'Nigeria'},
+           // ]
+          }
     },
 
-    // deleteUser(game) {
-    //   this.$http.delete('elimina/'+game.id).then(() => {
-    //     this.refreshGames()
-    //   })
-    // },
-  },
+    created() {
+        if (!localStorage.getItem('token'))
+            this.$router.push('login')
+        // else
+        //     this.getPlayers()
+    },
+
+    methods: {
+        getPlayers() {
+            this.$http.get('players').then(res => {
+                //console.log(res.data)
+                //this.players = res.data.data
+                this.$store.data.players=res.data.data
+            })
+        },
+
+
+
+        // deleteUser(game) {
+        //   this.$http.delete('elimina/'+game.id).then(() => {
+        //     this.refreshGames()
+        //   })
+        // },
+    },
 
 }
 </script>

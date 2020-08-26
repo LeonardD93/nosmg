@@ -29,25 +29,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" v-if="!$store.token">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" @click="goToPage('login')">Login</a>
+                        <a class="nav-link" href="#" @click="goToPage('login')">{{ $t('login') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" @click="goToPage('register')">Register</a>
+                        <a class="nav-link" href="#" @click="goToPage('register')">{{ $t('register') }}</a>
                     </li>
                 </ul>
 
                 <ul class="navbar-nav ml-auto" v-else>
                     <li class="nav-item">
-                        <a class="nav-link" @click="goToPage('invitations')" href="#">Invitations</a>
+                        <a class="nav-link" @click="goToPage('invitations')" href="#">{{ $t('invitations') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" @click="goToPage('activities')" href="#">Activities</a>
+                        <a class="nav-link" @click="goToPage('activities')" href="#">{{ $t('activities') }}</a>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link" @click="goToPage('players')" href="#" >Players</a>
+                        <a class="nav-link" @click="goToPage('players')" href="#" >{{ $t('players') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" @click="$store.logout()">Logout </a>
+                        <a class="nav-link" href="#" @click="$store.logout()">{{ $t('logout') }} </a>
                     </li>
 
                     <!-- <li class="nav-item dropdown">

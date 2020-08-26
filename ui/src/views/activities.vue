@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="">
-    <h1>Activities</h1>
+    <h1>{{ $t('activities') }}</h1>
     <div class="row">
         <!-- <div class='col-sm-1'></div> -->
         <div class="col-sm-6">
@@ -12,15 +12,15 @@
     <table id='activities_table' class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>#Name##</th>
-                <th>#Organizer##</th>
-                <th>#Start date##</th>
-                <th>#Level required##</th>
-                <th>#Type##</th>
-                <th>#Macrocategory##</th>
-                <th>#User number##</th>
-                <th>#Other Requests##</th>
-                <th>#Actions##</th>
+                <th>{{ $t('name') }}</th>
+                <th>{{ $t('Organizer') }}</th>
+                <th>{{ $t('Start_date') }}</th>
+                <th>{{ $t('Level_required') }}</th>
+                <th>{{ $t('Type') }}</th>
+                <th>{{ $t('Macrocategory') }}</th>
+                <th>{{ $t('User_number') }}</th>
+                <th>{{ $t('Other_Requests') }}</th>
+                <th>{{ $t('Actions') }}</th>
 
             </tr>
         </thead>

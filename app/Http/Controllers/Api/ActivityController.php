@@ -15,11 +15,6 @@ class ActivityController extends Controller
         return ActivityResource::collection(Activity::get());
     }
 
-    // public function store(Request $request){
-    //     $user=Auth::user()->players();
-    //
-    //     return $request;
-    // }
     public function store(Request $request)
     {
         $organizer_auth = Auth::user()->players->where('id',$request->organizer_id);
@@ -41,7 +36,7 @@ class ActivityController extends Controller
             $ActivityPlayer->save();
             return ['success'];
         }
-        else return ['error'=>'no permissions'];
+        else return ['error'=>'not allowed'];
     }
 
     public function update(Request $request, Activity $activity)

@@ -13,6 +13,7 @@ class PlayerResource extends JsonResource
             'name'=>$this->name,
             'level'=>$this->level,
             'class'=>$this->class,
+            'game_id'=>$this->game_id,
             'extra_params'=>$this->paramPlayer->pluck('value', 'param_name'),
         ];
         // {

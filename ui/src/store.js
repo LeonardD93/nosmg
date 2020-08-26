@@ -21,7 +21,6 @@ export default {
   },
   refreshData(){
     if (!this.token) {
-      console.log('qua')
       // cancello i dati in locale
     } else {
       this.app.$http('data').then(res => {
