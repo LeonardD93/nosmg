@@ -1,8 +1,46 @@
-$font-family-monospace: 'fira code';
-$font-family-base: $font-family-monospace;
-
+// $font-family-monospace: 'fira code';
+// $font-family-base: $font-family-monospace;
 $body-bg: #ECEFF4;
 $body-color: #3B4252;
-
+$border-color: #ECEFF4;
+$primary: #5E81AC;
+$danger: #BF616A;
+$gray-100: #ECEFF4;
+$gray-900: #2E3440;
+$gray-200: mix($gray-100, $gray-900, 90%);
+$gray-300: mix($gray-100, $gray-900, 80%);
+$gray-400: mix($gray-100, $gray-900, 70%);
+$gray-500: mix($gray-100, $gray-900, 60%);
+$gray-600: mix($gray-100, $gray-900, 40%);
+$gray-700: mix($gray-100, $gray-900, 20%);
+$gray-800: mix($gray-100, $gray-900, 10%);
+$table-head-bg: $gray-800;
+$table-head-color: $gray-100;
+$table-accent-bg: $gray-100;
+$table-hover-bg: $gray-200;
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
+
+.table {
+
+    th {
+        height: 4rem;
+    }
+
+    tr {
+        td, th {
+            vertical-align: middle;
+            &:first-child {
+                padding-left: 2rem;
+            }
+
+            &:last-child {
+                padding-right: 2rem;
+            }
+        }
+    }
+}
+
+.card {
+    box-shadow: 0 0 1rem rgba(0,0,0,.2);
+}

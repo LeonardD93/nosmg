@@ -16,6 +16,7 @@ use App\Http\Resources\ActivityResource;
 use App\Http\Resources\ActivityTypeResource;
 use App\Http\Resources\ParamResource;
 use App\Http\Resources\GameResource;
+use App\Http\Resources\UserResource;
 
 class DataController extends Controller
 {
@@ -30,9 +31,14 @@ class DataController extends Controller
     return [
       'games'=>GameResource::collection(Game::get()),
       'players'=>PlayerResource::collection($players),
-      'activities'=>ActivityResource::collection(Activity::with(['ActivityType', 'organizer.user'])->get()),
+      'activities'=>ActivityResource::collection(Activity::with(['ActivityType', 'organizer.user','players' ])->get()), //'ActivityPlayer',''
       'activitiesType'=>ActivityTypeResource::collection(ActivityType::with('game')->get()),
       'params'=>ParamResource::collection(Param::with('game')->get()),
+      'user'=>['id'=>$user->id,
+              'name'=>$user->name,
+              'email'=>$user->email,
+              'type'=>$user->type,],
+        //' ],//UserResource::collection($user
       //'invitations'=>
   ];
   }

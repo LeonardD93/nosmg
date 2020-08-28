@@ -14,6 +14,9 @@ const router = new VueRouter({
       path: '/users',
       name: 'users',
       component: () => import('./views/users'),
+      meta: {
+        auth: true,
+      },
     },
     {
       path: '/login',
@@ -29,16 +32,25 @@ const router = new VueRouter({
       path: '/invitations',
       name: 'invitations',
       component: () => import('./views/invitations'),
+      meta: {
+        auth: true,
+      },
     },
     {
       path: '/activities',
       name: 'activities',
       component: () => import('./views/activities'),
+      meta: {
+        auth: true,
+      },
     },
     {
       path: '/players',
       name: 'players',
       component: () => import('./views/players'),
+      meta: {
+        auth: true,
+      },
     },
   ]
 })

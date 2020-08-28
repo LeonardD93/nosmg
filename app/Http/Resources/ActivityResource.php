@@ -21,6 +21,8 @@ class ActivityResource extends JsonResource
             'users_number'=>$this->users_number,
             'other_req'=>$this->other_req,
             'user_organizer_id'=>$this->organizer->user->id,
+            //'activityPlayers'=>$this->ActivityPlayer,
+            'activityPlayers'=>$this->players,
         ];
     }
 }

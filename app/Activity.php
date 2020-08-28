@@ -15,7 +15,7 @@ class Activity extends Model
     }
 
      public function players(){//relazione many to many salvate nella users_activities
-        return $this->belongsToMany('App\Player','ActivityPlayer', 'activity_id','player_id');
+        return $this->belongsToMany('App\Player','activity_player', 'activity_id','player_id');
     }
 
     public function ActivityType(){//piu attivita dello stesso tipo

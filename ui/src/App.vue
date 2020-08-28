@@ -1,17 +1,25 @@
 <template lang="html">
   <div id="app">
-    <Nav />
-    <router-view/>
+    <Mymenu />
+    <template v-if="$route.meta && $route.meta.auth && !$store.token">
+      Vai al <a @click="$route.push({name:'login'})">login</a>
+    </template>
+    <template v-else-if="$route.meta && $route.meta.auth && !$store.data">
+      Loading...
+    </template>
+    <template v-else>
+      <router-view/>
+    </template>
     <!-- <pre>{{ $store.user }}</pre> -->
   </div>
 </template>
 
 <script>
-import Nav from './components/partials/nav.vue';
+import Mymenu from './components/partials/Mymenu.vue';
 
 export default {
   components: {
-   Nav
+   Mymenu
  },
   data () {
     return {

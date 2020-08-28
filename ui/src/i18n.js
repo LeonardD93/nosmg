@@ -27,9 +27,9 @@
     Users_number: 'Numero personaggi',
     Other_requests: 'Altre Richieste',
     extra_params: 'Parametri Extra',
-    edit: 'Modifica'
-
-
+    edit: 'Modifica',
+    askToPartecipate: 'Partecipa',
+    cancel:'Annulla',
 
   },
 }

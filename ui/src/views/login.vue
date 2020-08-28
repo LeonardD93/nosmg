@@ -8,30 +8,36 @@
 
 <script>
 export default {
-  data() {
-    return {
-      is_loading: false,
-      token:'',
-      input: {
-        email: "",
-        password: ""
+    data() {
+        return {
+            is_loading: false,
+            input: {
+                email: "",
+                password: ""
+            }
         }
-    }
-  },
-  methods: {
-    login() {
-      this.is_loading = true
-      if(this.input.email != "" && this.input.password != "") {
-        this.token=this.$store.get_token(this.input.email, this.input.password)
-          //this.$router.push({name:'home'})
-        this.$store.refreshData()
-        this.$router.push('home').catch(err => err)
-
-      } else {
-        console.log("A email and password must be not empty");
-      }
     },
-  },
+    methods: {
+        login() {
+            this.is_loading = true
+            if (this.input.email != "" && this.input.password != "") {
+                var params = {
+                    email: this.input.email,
+                    password: this.input.password,
+                }
+                this.$http.post('token', params).then(res => {
+                    console.log(res.data.value)
+                    this.$store.setToken(res.data.value)
+                    this.$router.push({
+                        name: 'home'
+                    })
+                })
+
+            } else {
+                console.log("A email and password must be not empty");
+            }
+        },
+    },
 }
 </script>
 

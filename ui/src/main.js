@@ -18,6 +18,10 @@ const http = Vue.prototype.$http = axios.create({
   baseURL: 'http://nosmg.x/api/',
 })
 
+import VTooltip from 'v-tooltip'
+Vue.use(VTooltip)
+
+
 // import * as mdbvue from 'mdbvue'
 // for (const component in mdbvue) {
 // Vue.component(component, mdbvue[component])
