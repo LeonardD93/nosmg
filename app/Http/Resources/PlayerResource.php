@@ -8,6 +8,7 @@ class PlayerResource extends JsonResource
 {
     public function toArray($request)
     {
+        //retrun $this;
         return[
             'id'=>$this->id,
             'name'=>$this->name,
@@ -16,25 +17,5 @@ class PlayerResource extends JsonResource
             'game_id'=>$this->game_id,
             'extra_params'=>$this->paramPlayer->pluck('value', 'param_name'),
         ];
-        // {
-        //     "specialist" => 3,
-        //     "asdf" => 123,
-        // }
-        // player.params.specialist
-        // player.params.specialistasd = 123
-        // [
-        //     { "name": "specialist", value: 123 },
-        //     { "name": "specialist", value: 123 },
-        //     { "name": "specialist", value: 123 },
-        // ]
-        // let info = player.params.find(param => param.name == 'specialist')
-        // if (info) return info.value
-        // else return null
-        //
-        // let info = player.params.find(param => param.name == 'specialist')
-        // if (info) info.value = 123
-        // else player.params.push({ name: 'specialist', value: 123 })
-
-
     }
 }

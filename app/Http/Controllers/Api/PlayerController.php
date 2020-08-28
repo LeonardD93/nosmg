@@ -12,7 +12,11 @@ use App\ParamPlayer;
 
 class PlayerController extends Controller {
     public function index(){
-        return PlayerResource::collection(Auth::user()->players);
+        $user=Auth::user();
+        $players = $user->players()
+            ->with(['paramPlayer', 'paramPlayer.param'])
+            ->get();
+        return PlayerResource::collection($players);
     }
 
     public function storeUpdate(Request $request)
@@ -48,4 +52,18 @@ class PlayerController extends Controller {
         }
         else return ['error'=>'not allowed'];
     }
+    public function destroy(request $request){
+        $user = Auth::user();
+        if($user){
+            $player=$user->players()->findOrFail(request('id'));
+            if($user->id==$player->user_id || $user->isAdmin()){
+                $player->paramPlayer()->delete();
+                $player->activity_organizing()->delete();
+                $player->delete();
+                return ['success'];
+            }
+        }
+        return ['error'=>'not allowed'];
+    }
+
 }

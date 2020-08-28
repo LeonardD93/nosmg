@@ -30,9 +30,12 @@ Route::group(['middleware'=>'auth:api'], function() {
   Route::get('players', 'Api\PlayerController@index');
   Route::get('activities', 'Api\ActivityController@index');
   Route::get('data','Api\DataController@index');
-  Route::post('activities','Api\ActivityController@store');
+  Route::post('activities','Api\ActivityController@storeUpdate');
+  Route::post('activities/destroy','Api\ActivityController@destroy');
+
   //Route::put('activities/{id}', 'Api\ActivityController@store');
   Route::post('players', 'Api\PlayerController@storeUpdate');
+  Route::post('players/destroy', 'Api\PlayerController@destroy');
 
 });
 

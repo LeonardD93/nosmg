@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $fillable = [
-        'id','name', 'start_date', 'level_req','type_id','users_number', 'other_req','created_at','updated_at'
+        'id','name', 'start_date', 'level_req','type_id','users_number', 'other_req','created_at','updated_at','organizer_id'
     ];
 
     public function organizer(){//organizer puo avere piu attività

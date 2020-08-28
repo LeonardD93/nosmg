@@ -34,5 +34,8 @@ class User extends Authenticatable
     public function loginTokens(){
         return $this->hasMany('App\LoginToken','user_id');
     }
+    // public function activities_organizing(){
+    //     $this::players->activity_organizing
+    // }
 
 }

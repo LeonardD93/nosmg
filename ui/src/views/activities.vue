@@ -4,7 +4,7 @@
     <div class="row">
         <!-- <div class='col-sm-1'></div> -->
         <div class="col-sm-6">
-              <newActivity />
+              <newUpdateActivity />
         </div>
     </div>
 
@@ -24,8 +24,8 @@
 
             </tr>
         </thead>
-        <tbody>
-            <tr v-for="activity in activities" v-bind:key="activity.id">
+        <tbody v-if="$store.data">
+            <tr v-for="activity in $store.data.activities" v-bind:key="activity.id">
                   <td>{{activity.name}}</td>
                   <td>{{activity.organizer_name}}</td>
                   <td>{{activity.start_date}}</td>
@@ -34,6 +34,13 @@
                   <td>{{activity.macrocategory}}</td>
                   <td>{{activity.users_number}}</td>
                   <td>{{activity.other_req}}</td>
+                  <td>
+                      <a href="#" class="btn btn-primary text-danger float-right" @click.prevent="deleteActivity(activity)">
+                        <b-icon icon="trash"/>
+                      </a>
+                       <newUpdateActivity v-bind:activity='activity' />
+
+                  </td>
 
               </tr>
           </tbody>
@@ -43,15 +50,13 @@
 </template>
 
 <script>
-import newActivity from '../components/activity/newActivity.vue';
+import newUpdateActivity from '../components/activity/newUpdateActivity.vue';
 export default {
     components: {
-        newActivity
+        newUpdateActivity
     },
     data () {
         return {
-            activities: null,
-            paramas: null,
         }
     },
     created() {
@@ -62,16 +67,20 @@ export default {
   },
 
   methods: {
-    getActivities(refresh=false) {
-        if(!refresh)
-            this.activities=JSON.parse( localStorage.getItem('activities'))
-        else{
-            this.$http.get('activities').then(res => {
-                this.activities = res.data.data
-                localStorage.setItem('activities', JSON.stringify(res.data.data))
+    getActivities() {
+        this.$http.get('activities').then(res => {
+            this.$store.data.activities=res.data.data
+        })
+    },
+    deleteActivity(activity){
+        if(confirm("Sei sicuro di voler cancellare "+activity.name+" ?")){
+            this.$http.post('activities/destroy',activity).then(()=> {
+
+                this.getActivities()
             })
         }
-    },
+
+    }
   },
 }
 </script>

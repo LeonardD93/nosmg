@@ -12,14 +12,24 @@ use \App\ActivityPlayer;
 class ActivityController extends Controller
 {
     public function index(){
-        return ActivityResource::collection(Activity::get());
+        //return ActivityResource::collection(Activity::get());
+        return ActivityResource::collection(Activity::with(['ActivityType', 'organizer.user'])->get());
     }
+    public function storeUpdate(Request $request){
+        $user = Auth::user();
+        $organizer_auth =$user->players->where('id',$request->organizer_id)->first();
 
-    public function store(Request $request)
-    {
-        $organizer_auth = Auth::user()->players->where('id',$request->organizer_id);
         if($organizer_auth){
-            $activity=new Activity();
+            if(request('id')){
+                $activity= Activity::where(
+                    'id', '=', request('id'))
+                    ->where('organizer_id', '=', $organizer_auth->id)->first();
+                 if(!$activity)
+                      return ['error'=>'not allowed','message'=>"you are not the organizer"];
+            }
+            else
+                $activity=new Activity();
+
             $activity->name=$request->name;
             $activity->organizer_id=$request->organizer_id;
             $activity->start_date=$request->start_date;
@@ -29,61 +39,27 @@ class ActivityController extends Controller
             $activity->users_number=$request->users_number;
             $activity->other_req=$request->other_req;
             $activity->save();
-
-            $ActivityPlayer=new ActivityPlayer();
-            $ActivityPlayer->player_id=$request->organizer_id;
-            $ActivityPlayer->activity_id=$activity->id;
-            $ActivityPlayer->save();
+            if(!request('id')){
+                $ActivityPlayer=new ActivityPlayer();
+                $ActivityPlayer->player_id=$request->organizer_id;
+                $ActivityPlayer->activity_id=$activity->id;
+                $ActivityPlayer->save();
+            }
             return ['success'];
         }
-        else return ['error'=>'not allowed'];
+        else return ['error'=>'not allowed','message'=>"you are not authenticated"];
     }
 
-    public function update(Request $request, Activity $activity)
-    {
+    public function destroy(request $request){
         $user = Auth::user();
-        $is_organizer=self::user_organizer($user, $activity);
-        if($user && $is_organizer){
-            $to_update=0;
-            if($activity->name!=$request->name ){
-                $activity->name=$request->name;
-                $to_update=1;
-            }
-            if($activity->start_date!=$request->start_date ){
-                $activity->start_date=$request->start_date;
-                $to_update=1;
-            }
-            if($activity->start_time!=$request->start_time ){
-                $activity->start_time=$request->start_time;
-                $to_update=1;
-            }
-            if($activity->level_req!=$request->level_req ){
-                $activity->level_req=$request->level_req;
-                $to_update=1;
-            }
-            if($activity->type_id!=$request->type_id ){
-                $activity->type_id=$request->type_id;
-                $to_update=1;
-            }
-            if($activity->users_number!=$request->users_number ){
-                $activity->users_number=$request->users_number;
-                $to_update=1;
-            }
-            if($activity->other_req!=$request->other_req ){
-                $activity->other_req=$request->other_req;
-                $to_update=1;
-            }
-            if($to_update){
-                $activity->save();
-                return redirect() ->route('activities.index')->with('success', 'Updated successful');
-            }
-            else{
-                return redirect() ->route('activities.index')->with('warning', 'No changes detected');
-            }
+        $organizer_auth =$user->players->where('id',$request->organizer_id)->first();
+        if($organizer_auth){
+            $activity= Activity::where(
+                'id', '=', request('id'))
+                ->where('organizer_id', '=', $organizer_auth->id)->first();
+            $activity->ActivityPlayer()->delete();
+            $activity->delete();
         }
-        else
-            return redirect() ->route('activities.index')->with('error', 'No permissions');
     }
-
 
 }

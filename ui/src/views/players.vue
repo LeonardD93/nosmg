@@ -4,7 +4,7 @@
         <div class="row">
             <!-- <div class='col-sm-1'></div> -->
             <div class="col-sm-6">
-                <newUpdate/>
+                <newUpdatePlayer/>
             </div>
         </div>
         <table id='player_table' class="table table-striped table-bordered">
@@ -19,7 +19,8 @@
                     <th>{{ $t('Actions') }}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody v-if="$store.data">
+
                 <tr v-for="player in $store.data.players" v-bind:key="player.id">
                     <td>{{player.name}}</td>
                     <!--<td>{{player.game()->first()->name}}</td>-->
@@ -31,7 +32,11 @@
                         </div>
                     </td>
                     <td>
-                         <newUpdate v-bind:player='player' />
+                        <a href="#" class="btn btn-primary text-danger float-right" @click.prevent="deletePlayer(player)">
+                          <b-icon icon="trash"/>
+                        </a>
+                         <newUpdatePlayer v-bind:player='player' />
+
                     </td>
                 </tr>
             </tbody>
@@ -40,10 +45,10 @@
 </template>
 
 <script>
-import newUpdate from '../components/player/newUpdate.vue';
+import newUpdatePlayer from '../components/player/newUpdatePlayer.vue';
 export default {
     components: {
-        newUpdate
+        newUpdatePlayer
     },
     data() {
         return {
@@ -71,6 +76,16 @@ export default {
                 this.$store.data.players=res.data.data
             })
         },
+        deletePlayer(player){
+            if(confirm("Sei sicuro di voler cancellare "+player.name+" e i suoi dati associati?")){
+                this.$http.post('players/destroy',player).then(res => {
+                    console.log(res)
+                    console.log(res.data)
+                    this.getPlayers()
+                //this.getPlayers()
+                })
+            }
+        }
 
 
 

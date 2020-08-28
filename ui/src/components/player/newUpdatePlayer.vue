@@ -18,7 +18,6 @@
                 <input v-model="form.level" id="level" min="0" max="99" type="number" class="form-control" name="level" required>
             </div>
         </div>
-
         <div class="form-group">
             <label for="class" class="col-md-4 control-label">{{ $t('Class') }}</label>
             <div class="col-md-6">
@@ -45,15 +44,16 @@
             </div>
         </div>
 
-        <b-button  v-if="!player" class="mt-3" block @click="addUpdate()">{{ $t('addNew') }}</b-button>
-        <b-button v-else class="mt-3" block @click="addUpdate()">{{ $t('edit') }}</b-button>
+        <b-button  v-if="!player" class="mt-3" block @click="addUpdate('modal_new')">{{ $t('addNew') }}</b-button>
+        <b-button v-else class="mt-3" block @click="addUpdate('modal_'+player.id)">{{ $t('edit') }}</b-button>
+        <!-- <b-button v-else class="mt-3" block @click="addUpdate()">{{ $t('edit') }}</b-button> -->
     </b-modal>
 </div>
 </template>
 
 <script>
 export default {
-    name: 'newUpdate',
+    name: 'newUpdatePlayer',
     props: {
         player: {
             type: Object,
@@ -77,8 +77,8 @@ export default {
         showModal(modal_name) {
             this.$root.$emit('bv::show::modal', modal_name, '#btnShow')
         },
-        addUpdate() {
-            this.$root.$emit('bv::hide::modal', 'modal_new')
+        addUpdate(modal_name) {
+            this.$root.$emit('bv::hide::modal', modal_name)
             this.$http.post('players', this.form).then(res => {
                 console.log(res);
             this.$parent.getPlayers()
