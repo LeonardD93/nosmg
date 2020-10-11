@@ -13,14 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 class Invitation extends Model
 {
     protected $fillable = [
-        'id','email', 'invitation_token', 'created_at','message','invited_by_user'
+        'id','email', 'invitation_token', 'created_at','message','referer_id','created_at','updated_at'
     ];
-    
+
     public function generateInvitationToken($user_id) {
-      
         $this->invitation_token = substr(md5(rand(0, 9) . $this->email . $user_id. time()), 0, 32);
     }
-    
+
     public function getLink() {
         return urldecode(route('register') . '?invitation_token=' . $this->invitation_token);
     }

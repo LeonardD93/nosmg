@@ -4,25 +4,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        <p>{{ session('error') }}</p>
-                    </div>
-                @endif
-
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        <p>{{ session('success') }}</p>
-                    </div>
-                @endif
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                          <h1> {{__('Create Player')}}</h1>
                     </div>
-
                     <div class="panel-body">
-
                         <form class="form-horizontal" method="POST" action="{{ route('players.store') }}" >
                              {{ csrf_field() }}
                                 <div class="form-group">

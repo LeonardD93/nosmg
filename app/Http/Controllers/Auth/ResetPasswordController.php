@@ -6,6 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
+trait CustomResetsPasswords {
+    use ResetsPasswords;
+
+    public function rules() {
+        return [
+            'password' => 'required|min:4',
+        ];
+    }
+}
+
 class ResetPasswordController extends Controller
 {
     /*
@@ -19,7 +29,7 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
+    use CustomResetsPasswords;
 
     /**
      * Where to redirect users after resetting their password.

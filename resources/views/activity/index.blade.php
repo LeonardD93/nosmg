@@ -1,6 +1,5 @@
-
+{{--activity--}}
 @extends('layouts.app')
-
 @section('content')
 
 <div class="container">
@@ -12,7 +11,6 @@
     <table id='activity_table' class="table table-striped table-bordered">
         <thead>
             <tr>
-
                 <th>{{ __('Name') }}</th>
                 <th>{{ __('Organizer') }}</th>
                 <th>{{ __('Start date') }}</th>
@@ -35,7 +33,16 @@
                 <td>{{$activity->macrocategory}}</td>
                 <td>{{$activity->users_number}}</td>
                 <td>{{$activity->other_req}}</td>
-                <td><a class="btn btn-info btn-sm">buttons actions</a></td>
+                <td>
+                    @if($activity->user_organizer)
+                        <a class="btn btn-info btn-sm" href='{{route('activities.edit', $activity)}}'>edit</a>
+                        <form action="{{route('activities.destroy', $activity)}}" method="post" data-message="Delete this Thing?" class="delete_form">
+                             @method('DELETE') 
+                             @csrf
+                            <input class="btn btn-info btn-sm" type="submit" value="Delete" />    
+                        </form>
+                    @endif              
+                </td>
             </tr>
             @endforeach
         </tbody>

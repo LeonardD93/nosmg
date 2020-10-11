@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Activity_type extends Model{
+class ActivityType extends Model{
     
      protected $fillable = [
         'id','name', 'game_id','macrocategory','created_at','updated_at'

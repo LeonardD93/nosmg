@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::viaRequest('ui-token', function($request) {
+            $token = $request->header('Authorization');
+            if (!$token) return null;
+            $lt = \App\LoginToken::where('value', $token)->where('expires_at', '>', Carbon::now())->first();
+
+            if ($lt) {// se esiste il token non scaduto aggiungo altri 30 minuti di validita
+                $lt->update(['expires_at'=>Carbon::now()->addMinutes(30)]);
+                return $lt->user;
+            }
+        });
     }
 }
